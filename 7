@@ -1,0 +1,53 @@
+#!/bin/bash
+dialog --title "Typ" \
+--backtitle "Szukajka" \
+--radiolist "Wybierz typ" 20 70 9 \
+"txt" "" "on" \
+"mp3" "" "off" \
+"jpg" "" "off" \
+"sh" "" "off" \
+"exe" "" "off" \
+"pdf" "" "off" \
+"html" "" "off" \
+"rar" "" "off" \
+"inne" "" "off" \
+2> /tmp/plik.txt
+
+WYNIK=$(cat /tmp/plik.txt)
+
+if [ "$WYNIK" = inne ]
+then
+
+dialog --title "Okno inputbox" \
+--backtitle "Szukajka" \
+--inputbox "Podaj rodzaj pliku np. mp3:" 6 50 2> /tmp/rodzaj.txt
+
+dialog --title "Okno inputbox" \
+--backtitle "Szukajka" \
+--inputbox "Podaj sciezke do katalogu:" 6 50 2> /tmp/sc.txt
+
+
+ZMIENNA=$(cat /tmp/rodzaj.txt)
+ZMIENNA1=$(cat /tmp/sc.txt)
+cd "$ZMIENNA1"
+ZMIENNA3=$(ls *."$ZMIENNA")
+
+ 
+dialog --title "Okno dialogowe" \
+--msgbox "$ZMIENNA3" 40 40
+
+
+else
+dialog --title "Sciezka" \
+--backtitle "Szukajka" \
+--inputbox "Podaj sciezke do katalogu:" 6 50 2> /tmp/plik1.txt
+
+ZMIENNA1=$(cat /tmp/plik1.txt)
+cd "$ZMIENNA1"
+ZMIENNA3=$(ls *."$WYNIK")
+
+dialog --title "Okno" \
+--msgbox "$ZMIENNA3" 30 50 
+ 
+fi
+
